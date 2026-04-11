@@ -106,6 +106,59 @@ img {
 .logo {
     flex: 0 0 48%;
     max-width: 48%;
+    display: flex;    
+    align-items: center;
+    gap: 15px;
+}
+
+.logo-txt {
+    font-size: 64px;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    background: linear-gradient(to bottom
+    #6ec1ff 0%
+    #1e73be 40%
+    #0b3d91 70%
+    #021f4d 100%
+    );
+
+
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+
+    text-shadow: 
+    0 2px 0 #000,
+    0 4px 6px rgba(0, 0, 0, 0.6),
+    0 0 10px rgba(0, 140, 255, 0.5);
+}
+
+.emboss {
+    text-shadow: 
+    1px 1px 0 #000,
+    2px 2px 0 #001a33,
+    3px 3px 0 rgba(0,0,0,0.7)
+}
+
+.logo-gold {
+    font-size: 24px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    background: linear-gradient(to bottom,
+    #fff4b0 0%,
+    #ffd700 40%,
+    #c9a100 70%,
+    #7a5c00 100%
+    );
+
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+
+    text-shadow: 
+    0 1px 0 #000,
+    0 2px 4px rgba(0, 0, 0, 0.5),s;
 }
 
 .logo img {
@@ -228,8 +281,11 @@ img {
     display: flex;
     align-items: center;
     justify-content: center;
-    background: linear-gradient(135deg, var(--primary-blue) 0%, var(--primary-blue-dark) 100%);
+    background-image: url("images/client-1.jpg");
+    background-size: cover;
+    background-position: center;
     overflow: hidden;
+    z-index: 0;
 }
 
 .hero::before {
