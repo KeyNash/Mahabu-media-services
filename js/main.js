@@ -44,9 +44,12 @@ function initNavigation() {
 
     // Mobile menu toggle
     navToggle.addEventListener('click', function() {
+        const isActive = navMenu.classList.contains('active');
         navToggle.classList.toggle('active');
         navMenu.classList.toggle('active');
         document.body.style.overflow = navMenu.classList.contains('active') ? 'hidden' : '';
+        navToggle.setAttribute('aria-expanded', !isActive? 'true' : 'false');
+        navMenu.setAttribute('aria-hidden', isActive? 'true' : 'false');
     });
 
     // Close mobile menu when clicking a link
@@ -55,7 +58,31 @@ function initNavigation() {
             navToggle.classList.remove('active');
             navMenu.classList.remove('active');
             document.body.style.overflow = '';
+            navToggle.setAttribute('aria-expanded', 'false');
+            navMenu.setAttribute('aria-hidden', 'true');
         });
+    });
+
+    //close mobile menu when clicking outside
+    document.addEventListener('click', function(e) {
+        if (navMenu.classList.contains('active') && !navMenu.contains(e.target) && e.target !== navToggle) {
+            navToggle.classList.remove('active');
+            navMenu.classList.remove('active');
+            document.body.style.overflow = '';
+            navToggle.setAttribute('aria-expanded', 'false');
+            navMenu.setAttribute('aria-hidden', 'true');
+        }
+    });
+
+    // close on escape key press
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' && navMenu.classList.contains('active')) {
+            navToggle.classList.remove('active');
+            navMenu.classList.remove('active');
+            document.body.style.overflow = '';
+            navToggle.setAttribute('aria-expanded', 'false');
+            navMenu.setAttribute('aria-hidden', 'true');
+        }
     });
 
     // Back to top button
