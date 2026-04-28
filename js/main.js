@@ -48,8 +48,8 @@ function initNavigation() {
         navToggle.classList.toggle('active');
         navMenu.classList.toggle('active');
         document.body.style.overflow = navMenu.classList.contains('active') ? 'hidden' : '';
-        navToggle.setAttribute('aria-expanded', !isActive? 'true' : 'false');
-        navMenu.setAttribute('aria-hidden', isActive? 'true' : 'false');
+        navToggle.setAttribute('aria-expanded', !isActive ? 'true' : 'false');
+        navMenu.setAttribute('aria-hidden', isActive ? 'true' : 'false');
     });
 
     // Close mobile menu when clicking a link
@@ -63,9 +63,9 @@ function initNavigation() {
         });
     });
 
-    //close mobile menu when clicking outside
+    // Close mobile menu when clicking outside
     document.addEventListener('click', function(e) {
-        if (navMenu.classList.contains('active') && !navMenu.contains(e.target) && e.target !== navToggle) {
+        if (navMenu.classList.contains('active') && !navMenu.contains(e.target) && e.target !== navToggle && !navToggle.contains(e.target)) {
             navToggle.classList.remove('active');
             navMenu.classList.remove('active');
             document.body.style.overflow = '';
@@ -74,7 +74,7 @@ function initNavigation() {
         }
     });
 
-    // close on escape key press
+    // Close on escape key press
     document.addEventListener('keydown', function(e) {
         if (e.key === 'Escape' && navMenu.classList.contains('active')) {
             navToggle.classList.remove('active');
@@ -229,6 +229,7 @@ function initTestimonialsSlider() {
     const prevBtn = document.querySelector('.testimonial-prev');
     const nextBtn = document.querySelector('.testimonial-next');
     let currentIndex = 0;
+    let autoSlideInterval;
 
     const showTestimonial = (index) => {
         testimonialItems.forEach((item, i) => {
@@ -249,13 +250,28 @@ function initTestimonialsSlider() {
         showTestimonial(currentIndex);
     };
 
+    const startAutoSlide = () => {
+        autoSlideInterval = setInterval(nextTestimonial, 5000);
+    };
+
+    const resetAutoSlide = () => {
+        clearInterval(autoSlideInterval);
+        startAutoSlide();
+    };
+
     if (nextBtn && prevBtn) {
-        nextBtn.addEventListener('click', nextTestimonial);
-        prevBtn.addEventListener('click', prevTestimonial);
+        nextBtn.addEventListener('click', () => {
+            nextTestimonial();
+            resetAutoSlide();
+        });
+        prevBtn.addEventListener('click', () => {
+            prevTestimonial();
+            resetAutoSlide();
+        });
     }
 
     // Auto-slide every 5 seconds
-    setInterval(nextTestimonial, 5000);
+    startAutoSlide();
 }
 
 /**
@@ -319,6 +335,41 @@ function isValidEmail(email) {
 /**
  * Custom notification system
  */
+(function injectNotificationStyles() {
+    if (document.getElementById('notification-styles')) return;
+    const style = document.createElement('style');
+    style.id = 'notification-styles';
+    style.textContent = `
+        @keyframes slideIn {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+        @keyframes slideOut {
+            from { transform: translateX(0); opacity: 1; }
+            to { transform: translateX(100%); opacity: 0; }
+        }
+        .notification-content {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex: 1;
+        }
+        .notification-close {
+            background: none;
+            border: none;
+            color: white;
+            cursor: pointer;
+            font-size: 1rem;
+            opacity: 0.8;
+            transition: opacity 0.3s;
+        }
+        .notification-close:hover {
+            opacity: 1;
+        }
+    `;
+    document.head.appendChild(style);
+})();
+
 function showNotification(message, type = 'info') {
     // Remove existing notifications
     const existingNotification = document.querySelector('.notification');
@@ -354,38 +405,6 @@ function showNotification(message, type = 'info') {
         animation: slideIn 0.3s ease;
         max-width: 400px;
     `;
-
-    // Add animation styles
-    const style = document.createElement('style');
-    style.textContent = `
-        @keyframes slideIn {
-            from { transform: translateX(100%); opacity: 0; }
-            to { transform: translateX(0); opacity: 1; }
-        }
-        @keyframes slideOut {
-            from { transform: translateX(0); opacity: 1; }
-            to { transform: translateX(100%); opacity: 0; }
-        }
-        .notification-content {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            flex: 1;
-        }
-        .notification-close {
-            background: none;
-            border: none;
-            color: white;
-            cursor: pointer;
-            font-size: 1rem;
-            opacity: 0.8;
-            transition: opacity 0.3s;
-        }
-        .notification-close:hover {
-            opacity: 1;
-        }
-    `;
-    document.head.appendChild(style);
 
     // Close button functionality
     notification.querySelector('.notification-close').addEventListener('click', () => {

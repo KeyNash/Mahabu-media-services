@@ -116,29 +116,27 @@ img {
     font-weight: 900;
     text-transform: uppercase;
     letter-spacing: 2px;
-    background: linear-gradient(to bottom
-    #6ec1ff 0%
-    #1e73be 40%
-    #0b3d91 70%
-    #021f4d 100%
+    background: linear-gradient(to bottom,
+        #6ec1ff 0%,
+        #1e73be 40%,
+        #0b3d91 70%,
+        #021f4d 100%
     );
-
-
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
 
     text-shadow: 
-    0 2px 0 #000,
-    0 4px 6px rgba(0, 0, 0, 0.6),
-    0 0 10px rgba(0, 140, 255, 0.5);
+        0 2px 0 #000,
+        0 4px 6px rgba(0, 0, 0, 0.6),
+        0 0 10px rgba(0, 140, 255, 0.5);
 }
 
 .emboss {
     text-shadow: 
-    1px 1px 0 #000,
-    2px 2px 0 #001a33,
-    3px 3px 0 rgba(0,0,0,0.7)
+        1px 1px 0 #000,
+        2px 2px 0 #001a33,
+        3px 3px 0 rgba(0,0,0,0.7);
 }
 
 .logo-gold {
@@ -146,19 +144,18 @@ img {
     font-weight: 700;
     letter-spacing: 1px;
     background: linear-gradient(to bottom,
-    #fff4b0 0%,
-    #ffd700 40%,
-    #c9a100 70%,
-    #7a5c00 100%
+        #fff4b0 0%,
+        #ffd700 40%,
+        #c9a100 70%,
+        #7a5c00 100%
     );
-
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
 
     text-shadow: 
-    0 1px 0 #000,
-    0 2px 4px rgba(0, 0, 0, 0.5),s;
+        0 1px 0 #000,
+        0 2px 4px rgba(0, 0, 0, 0.5);
 }
 
 .logo img {
@@ -281,27 +278,26 @@ img {
     display: flex;
     align-items: center;
     justify-content: center;
-    background-image: url("images/about-image.jpg");
-    background-size: cover;
-    background-position: center;
+    background-color: var(--primary-blue-dark);
     overflow: hidden;
-    z-index: 0;
+    z-index: 1;
 }
 
-.hero::before {
-    content: '';
+.hero-bg-image {
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background: url('images/about-image.jpg');
-    background-size: 100px 100px;
+    object-fit: cover;
+    object-position: center;
+    opacity: 0.3;
     animation: float 20s linear infinite;
-    background-size: cover;
-    background-position: center;
-    opacity: 0.15;
     z-index: 1;
+}
+
+.hero::before {
+    display: none;
 }
 
 @keyframes float {
@@ -315,12 +311,13 @@ img {
     left: 0;
     width: 100%;
     height: 100%;
-    background: radial-gradient(ellipse at center, transparent 0%, rgba(0, 0, 0, 0.3) 100%);
+    background: radial-gradient(ellipse at center, transparent 0%, rgba(0, 0, 0, 0.212) 100%);
+    z-index: 2;
 }
 
 .hero-content {
     position: relative;
-    z-index: 2;
+    z-index: 3;
     text-align: center;
     padding: 120px 20px 80px;
 }
@@ -722,6 +719,7 @@ section {
     border-radius: var(--border-radius);
     overflow: hidden;
     box-shadow: var(--shadow-sm);
+    transition: var(--transition);
 }
 
 .portfolio-image {
@@ -1314,7 +1312,7 @@ section {
         justify-content: center;
         align-items: center;
         gap: 30px;
-        transition: transform 0,32s ease, opacity 0.32s ease;
+        transition: transform 0.32s ease, opacity 0.32s ease;
         box-shadow: var(--shadow-lg);
         transform: translateX(100%);
         opacity: 0;
@@ -1460,6 +1458,7 @@ section {
   .testimonial-text { font-size: 1rem; }
 
   .back-to-top { right: 15px; bottom: 15px; width: 44px; height: 44px; }
+}
 
 /* ============================================
    Print Styles
